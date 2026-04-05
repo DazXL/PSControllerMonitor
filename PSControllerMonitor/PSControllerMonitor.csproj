@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <AssemblyName>PSControllerMonitor</AssemblyName>
+    <RootNamespace>PSControllerMonitor</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseAppHost>true</UseAppHost>
+    <ApplicationIcon>..\icons\256x.ico</ApplicationIcon>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.19041.0</TargetPlatformVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\BluetoothBatteryMonitor\*.cs" Exclude="..\BluetoothBatteryMonitor\Program.cs" Link="Monitor\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\icons\32connected.ico" Link="icons\32connected.ico" />
+    <EmbeddedResource Include="..\icons\32notfound.ico" Link="icons\32notfound.ico" />
+    <EmbeddedResource Include="..\icons\BTlow.ico" Link="icons\BTlow.ico" />
+    <EmbeddedResource Include="..\icons\BTchgn.ico" Link="icons\BTchgn.ico" />
+    <EmbeddedResource Include="..\icons\BTcnx.ico" Link="icons\BTcnx.ico" />
+    <EmbeddedResource Include="..\icons\BTfullch.ico" Link="icons\BTfullch.ico" />
+    <EmbeddedResource Include="..\icons\USBcnx.ico" Link="icons\USBcnx.ico" />
+  </ItemGroup>
+
+</Project>
