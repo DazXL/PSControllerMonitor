@@ -19,3 +19,6 @@ PSControllerMonitor/README.md
 PSControllerMonitor/tray-icon-spec.md
 multi-controller-plan.md
 BluetoothBatteryMonitor/ipc-boundary.md
+release.ps1
+Directory.Build.props
+.github/workflows/release-portable.yml
