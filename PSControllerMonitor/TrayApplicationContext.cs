@@ -13,6 +13,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
     private readonly NotifyIcon _trayIcon;
     private readonly ToolStripMenuItem _reorderControllersMenuItem;
     private readonly ToolStripMenuItem _showDetailsMenuItem;
+    private readonly ToolStripMenuItem _aboutMenuItem;
     private readonly ToolStripMenuItem _exitMenuItem;
     private readonly System.Windows.Forms.Timer _foundConnectedTimer;
     private readonly System.Windows.Forms.Timer _hoverShowTimer;
@@ -43,6 +44,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
 
         _reorderControllersMenuItem = new ToolStripMenuItem("Re-order Controllers");
         _showDetailsMenuItem = new ToolStripMenuItem("Show Current Status");
+        _aboutMenuItem = new ToolStripMenuItem("About");
         _exitMenuItem = new ToolStripMenuItem("Exit");
         _foundConnectedTimer = new System.Windows.Forms.Timer
         {
@@ -66,6 +68,8 @@ internal sealed class TrayApplicationContext : ApplicationContext
         _contextMenu.Items.Add(new ToolStripSeparator());
         _contextMenu.Items.Add(_showDetailsMenuItem);
         _contextMenu.Items.Add(new ToolStripSeparator());
+        _contextMenu.Items.Add(_aboutMenuItem);
+        _contextMenu.Items.Add(new ToolStripSeparator());
         _contextMenu.Items.Add(_exitMenuItem);
 
         _trayIcon = new NotifyIcon
@@ -77,6 +81,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
 
         _reorderControllersMenuItem.Click += ReorderControllersMenuItem_Click;
         _showDetailsMenuItem.Click += ShowDetailsMenuItem_Click;
+        _aboutMenuItem.Click += AboutMenuItem_Click;
         _exitMenuItem.Click += ExitMenuItem_Click;
         _contextMenu.Opening += ContextMenu_Opening;
         _trayIcon.MouseDoubleClick += TrayIcon_MouseDoubleClick;
@@ -117,6 +122,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
             _trayIcon.MouseClick -= TrayIcon_MouseClick;
             _reorderControllersMenuItem.Click -= ReorderControllersMenuItem_Click;
             _showDetailsMenuItem.Click -= ShowDetailsMenuItem_Click;
+            _aboutMenuItem.Click -= AboutMenuItem_Click;
             _exitMenuItem.Click -= ExitMenuItem_Click;
             _trayIcon.Visible = false;
 
@@ -278,6 +284,13 @@ internal sealed class TrayApplicationContext : ApplicationContext
     private void ShowDetailsMenuItem_Click(object? sender, EventArgs e)
     {
         ShowCurrentStatus();
+    }
+
+    // Opens the About dialog from the tray context menu.
+    private void AboutMenuItem_Click(object? sender, EventArgs e)
+    {
+        HideHoverPanel();
+        AboutDialog.Show();
     }
 
     // Hides the hover panel before the tray context menu opens.

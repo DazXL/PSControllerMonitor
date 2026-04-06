@@ -4,6 +4,7 @@ internal sealed class StatusDetailsForm : Form
 {
     private readonly Label _titleLabel;
     private readonly Label _summaryLabel;
+    private readonly Button _aboutButton;
     private readonly Button _reorderButton;
     private readonly TabControl _tabs;
     private readonly FlowLayoutPanel _controllersPanel;
@@ -28,11 +29,33 @@ internal sealed class StatusDetailsForm : Form
 
         _titleLabel = new Label
         {
-            Dock = DockStyle.Top,
-            Height = 28,
+            Dock = DockStyle.Fill,
             Font = new Font("Segoe UI", 11f, FontStyle.Bold),
-            Padding = new Padding(12, 8, 12, 0)
+            Padding = new Padding(12, 8, 12, 0),
+            TextAlign = ContentAlignment.MiddleLeft
         };
+
+        _aboutButton = new Button
+        {
+            Text = "?",
+            Width = 30,
+            Height = 28,
+            Dock = DockStyle.Right,
+            FlatStyle = FlatStyle.System,
+            Margin = new Padding(0),
+            AccessibleName = "About",
+            TabStop = false
+        };
+        _aboutButton.Click += AboutButton_Click;
+
+        var headerPanel = new Panel
+        {
+            Dock = DockStyle.Top,
+            Height = 38,
+            Padding = new Padding(0)
+        };
+        headerPanel.Controls.Add(_titleLabel);
+        headerPanel.Controls.Add(_aboutButton);
 
         _summaryLabel = new Label
         {
@@ -99,7 +122,7 @@ internal sealed class StatusDetailsForm : Form
         overviewPanel.Controls.Add(_diagnosticsGroup);
         overviewPanel.Controls.Add(actionPanel);
         overviewPanel.Controls.Add(_summaryLabel);
-        overviewPanel.Controls.Add(_titleLabel);
+        overviewPanel.Controls.Add(headerPanel);
 
         var overviewTab = new TabPage("Overview")
         {
@@ -201,6 +224,7 @@ internal sealed class StatusDetailsForm : Form
     {
         if (disposing)
         {
+            _aboutButton.Click -= AboutButton_Click;
             _reorderButton.Click -= ReorderButton_Click;
         }
 
@@ -211,6 +235,12 @@ internal sealed class StatusDetailsForm : Form
     private void ReorderButton_Click(object? sender, EventArgs e)
     {
         ReorderRequested?.Invoke(this, EventArgs.Empty);
+    }
+
+    // Opens the About dialog from the details window header.
+    private void AboutButton_Click(object? sender, EventArgs e)
+    {
+        AboutDialog.Show(this);
     }
 
     // Hides the form on user close so the details window can be reopened from the tray icon.
